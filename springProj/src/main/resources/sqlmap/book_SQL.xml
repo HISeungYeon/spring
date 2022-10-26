@@ -21,4 +21,57 @@
 		VALUES(#{bookId}, #{title}, #{category}, #{price}, SYSDATE)
 		
 	</insert>
+	
+	<!-- 책 상세보기
+	 	select 태그는 조회(select) 쿼리를 실행하기 위한 mybatis 태그. 
+	 	parameterType(book_SQL.xml로 들어왓!) : bookVO 타입
+	 	resultType(bookDao로 가쟛) : bookVO타입
+	 	=> mybatisAlias.xml에서 typeAliases로 설정해줘서  
+	 	-->
+	<select id="select_detail" parameterType="bookVO" resultType="bookVO">
+		SELECT BOOK_ID, TITLE, CATEGORY, PRICE, INSERT_DATE
+		FROM BOOK
+		WHERE BOOK_ID = #{bookId}
+	</select>
+	
+	<!-- 책목록
+		들어오는 것! : {"keyWord":"개똥"} or 없거나
+		나가는 것! : bookVO
+		
+		where 1 = 1 은 늘 참. 조건이 2개 이상일 때 where + and 
+							조건이 1개 일 때 where이어야 함.
+							where(생략)
+							AND 
+							=> 오류발행
+							==>
+							WHERE 1 = 1
+							AND (생략)
+							AND 
+							=> 정상
+	 -->
+	<select id="list" parameterType="String" resultType="bookVO">
+		SELECT BOOK_ID, TITLE, CATEGORY, PRICE, INSERT_DATE
+		FROM BOOK
+		WHERE 1 = 1
+		<if test="keyWord!=null and keyWord !=''">
+		AND 	(TITLE LIKE '%' || #{keyWord} || '%'
+		OR 		CATEGORY LIKE '%' || #{keyWord} || '%')
+		</if>
+		ORDER BY INSERT_DATE DESC
+	</select>
+	
+	<!-- 책 수정하기 update 태그는 update SQL문을 실행하기 위한 마이바티스 태그 -->
+	<update id="update" parameterType="bookVO">
+		UPDATE BOOK
+		SET TITLE=#{title}, CATEGORY=#{category}, PRICE=#{price}
+		WHERE BOOK_ID = #{bookId}
+	</update>
+	
+	<!-- 책 삭제하기 delete 태그는 삭제 SQL를 실행하기 위한 mybatis 태그 resultType="int" 생략가능 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM BOOK
+		WHERE BOOK_ID = #{bookId}
+	</delete>
+	
+	
 </mapper>

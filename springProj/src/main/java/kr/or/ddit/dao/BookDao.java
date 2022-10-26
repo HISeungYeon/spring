@@ -1,5 +1,7 @@
 package kr.or.ddit.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,14 +16,44 @@ public class BookDao {
 	// 1. DI (Dependency Injection) : 의존성 주입
 	// new 키워드를 통해 직접 생성하지 않고 스프링이 미리 만들어 놓은 (서버 실행 시 미리 root-context.xml을 읽어서
 	// 자바빈 객체로 인스턴스화 해놓음) sqlSessionTemplate 타입 객체를 BookDao 객체를 주입하여 사용함.
-	
 	// 2. IoC(Inversion of Control) : 제어의 역전
+	
 	@Autowired
-	SqlSessionTemplate sqlSessionTemplate;
+	SqlSessionTemplate sqlSessionTemplate; // = new 
 	
 	public int insert(BookVO bookVO) {
 		// book_SQL.xml 파일의 namespace가 book이고, id가 insert인 태그를 찾아 그 안에 들어있는 sql을 실행함.
 		//insert 성공 : 1이상, 실패면 0
 		return this.sqlSessionTemplate.insert("book.insert", bookVO);
+	}
+	
+	//책 상세보기
+	public BookVO selectDetail(BookVO bookVO) {
+		//sqlSessionTemplate : 쿼리를 실행해주는 객체(root-context.xml)
+		//selectOne() 메소드 : 1행을 가져올 때 사용/ selectList()메소드 : 결과 집합 목록 변환(다중행)
+		//결과 행 수가 0이면? null 반환
+		//결과 행 수가 2 이상이면? TooManyResultsException 예외발생
+		//.selectOne("namespace.id", 파라미터)
+		return this.sqlSessionTemplate.selectOne("book.select_detail", bookVO);
+	}
+	
+	// 책 목록보기
+	public List<BookVO> list(String keyword) {
+		//select 결과를 목록으로 받음. selectList("namespace.id", 파라미터)
+		return this.sqlSessionTemplate.selectList("book.list", keyword);
+		
+	}
+	
+	//책 수정하기
+	//매퍼 xml에서 insert/update/delete의 resultType은 생략
+	public int update(BookVO bookVO) {
+		//.update("namespace.id"
+		return this.sqlSessionTemplate.update("book.update", bookVO);
+	}
+	
+	// 책 삭제하기
+	public int delete(int bookId) {
+		//.delete("namespace.id", 파라미터)
+		return this.sqlSessionTemplate.delete("book.delete", bookId);
 	}
 }
