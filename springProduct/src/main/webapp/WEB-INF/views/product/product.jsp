@@ -37,7 +37,7 @@ function addToCart(){
 	<div class="container">
 		<div class="row" align="center">
 			<div class="col-md-6">
-				<img src="/resources/images/${product.fileName}" style="width:70%;" alt="${product.pname}" title="${product.pname}" />
+				<img src="/resources/upload/${product.fileName}" style="width:70%;" alt="${product.pname}" title="${product.pname}" />
 				<h3>${product.pname}</h3>
 				<p>${product.description}</p>
 				<p>

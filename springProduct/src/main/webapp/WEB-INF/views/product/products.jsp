@@ -26,7 +26,7 @@
 			<!-- 열별 처리 -->
 			<div class="col-md-4">
 <!-- 				/images/P1234.jpg -->
-				<img src="/resources/images/${product.fileName}" style="width:100%;" alt="${product.pname}" title="${product.pname}" />
+				<img src="/resources/upload/${product.fileName}" style="width:100%;" alt="${product.pname}" title="${product.pname}" />
 				<h3>${product.pname }</h3>
 				<p>${product.description }</p>
 				<p>${product.unitPrice }원</p>	

@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.vo.AttachVO;
+import kr.or.ddit.vo.CartVO;
 import kr.or.ddit.vo.ProductVO;
 
 // 매퍼xml(book_SQL.xml)을 실행시키는
@@ -47,5 +49,21 @@ public class ProductDao {
 	// 상품 삭제하기
 	public int delete(String productId) {
 		return this.sqlSessionTemplate.delete("product.delete", productId);
+	}
+	
+	//CART 테이블에 insert
+	public int insertCart(CartVO cartVO) {
+		return this.sqlSessionTemplate.insert("product.insertCart", cartVO);
+	}
+	
+	//ATTACH 테이블에 다중 INSERT
+	public int insertAttach(List<AttachVO> attachVOList) {
+		return this.sqlSessionTemplate.insert("product.insertAttach", attachVOList);
+	}
+	
+	// PRODUCT테이블의 기본키 자동 생성
+	public String getProductId() {
+		//1행 select, 파라미터 없음
+		return this.sqlSessionTemplate.selectOne("product.getProductId");
 	}
 }

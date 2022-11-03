@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.dao.BookDao;
 import kr.or.ddit.service.BookService;
+import kr.or.ddit.vo.AttachVO;
 import kr.or.ddit.vo.BookVO;
+import kr.or.ddit.vo.MemberMineVO;
 
 // 스프링아 이 클래스는 서비스 클래스야 ~! 
 @Service
@@ -50,4 +52,11 @@ public class BookServiceImpl implements BookService {
 		return this.bookDao.delete(bookId);
 		
 	}
+
+	//ATTACH 테이블에 다중 INSERT
+	@Override
+	public int insertAttach(List<AttachVO> attachVOList) {
+		return this.bookDao.insertAttach(attachVOList);
+	}
+
 }

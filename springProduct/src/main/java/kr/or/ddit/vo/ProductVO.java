@@ -1,6 +1,9 @@
 package kr.or.ddit.vo;
 
 import java.io.Serializable;
+import java.util.Arrays;
+
+import org.springframework.web.multipart.MultipartFile;
 
 //ProductVO : PRODUCT 테이블의 1행을 담음
 //VO : Value Object 
@@ -26,6 +29,9 @@ public class ProductVO implements Serializable {
 	
 	// ch 13에서 추가
 	private int quantity;	// 장바구니에 담은 개수
+	
+	//<input type="file" id="productImage" name="productImage" class="form-control" multiple />
+	private MultipartFile[] productImage;
 	
 	// 기본생성자
 	public ProductVO() {}
@@ -158,11 +164,25 @@ public class ProductVO implements Serializable {
 
 
 
+	public MultipartFile[] getProductImage() {
+		return productImage;
+	}
+
+
+
+	public void setProductImage(MultipartFile[] productImage) {
+		this.productImage = productImage;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "ProductVO [productId=" + productId + ", pname=" + pname + ", unitPrice=" + unitPrice + ", description="
 				+ description + ", manufacturer=" + manufacturer + ", category=" + category + ", unitsInStock="
-				+ unitsInStock + ", condition=" + condition + ", fileName=" + fileName + ", quantity=" + quantity + "]";
+				+ unitsInStock + ", condition=" + condition + ", fileName=" + fileName + ", quantity=" + quantity
+				+ ", productImage=" + Arrays.toString(productImage) + "]";
 	}
+
 	
 }

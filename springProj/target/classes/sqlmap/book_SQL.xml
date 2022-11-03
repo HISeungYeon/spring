@@ -12,7 +12,7 @@
 		3)insert, update, delete 태그의 resultType은 생략 => 0 또는 반영된 개수
 		
 	 -->
-	<insert id="insert" parameterType="kr.or.ddit.vo.BookVO">
+	<insert id="insert" parameterType="bookVO">
 		<selectKey order="BEFORE" resultType="integer" keyProperty="bookId">
 			SELECT NVL (MAX(BOOK_ID), 0)+1 FROM BOOK
 		</selectKey>
@@ -73,5 +73,15 @@
 		WHERE BOOK_ID = #{bookId}
 	</delete>
 	
-	
+	<!-- ATTACH 테이블에 insert
+	들어오는 것 : List<AttachVO>
+	나가는 것 : 생략
+	 -->
+	 <update id="insertAttach" parameterType="java.util.List">
+	 	<foreach collection="list" item="attachVO" open="INSERT ALL "
+	 		close="SELECT * FROM SYS.DUAL" separator=" ">
+	 		INTO ATTACH VALUES(#{attachVO.seq},#{attachVO.tid},#{attachVO.attachName}
+	 			,#{attachVO.attachSize},#{attachVO.attachType},sysdate)
+	 	</foreach>
+	 </update>
 </mapper>

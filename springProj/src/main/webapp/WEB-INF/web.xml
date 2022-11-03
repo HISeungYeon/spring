@@ -27,6 +27,7 @@
 		<!-- 파일업로드를 위해 추가 -->
 		<!-- web.xml의 설정은 Tomcat 자체 설정일 뿐임 
 			multipart-config : 메모리사이즈, 업로드 파일 저장 위치, 최대 크기 설정
+			위치 중요 !! 꼭 servlet 태그 안에 있오야 함 !!
 		-->
 		<multipart-config>
 			<location>c:\\upload</location> <!-- 업로드 되는 파일을 저장할 공간 -->
