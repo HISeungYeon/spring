@@ -112,7 +112,7 @@ $(function(){
 									<tr class="even">
 								</c:if>
 									<td class="sorting_1">${memberList.memId}</td>
-									<td>${memberList.memName}</td>
+									<td><a href="/board/detail?memId=${memberList.memId}">${memberList.memName}</a></td>
 									<td>${memberList.memJob}</td>
 									<td>${memberList.memLike}</td>
 									<td>${memberList.memMileage}</td>

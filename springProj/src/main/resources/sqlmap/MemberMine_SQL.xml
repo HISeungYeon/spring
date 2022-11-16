@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace : xml파일은 여러개일 수 있으므로 이를 구별하기 위한 식별 용도로 사용  -->
-<mapper namespace="memberMine">
+<mapper namespace="kr.or.ddit.mapper.MemberMineMapper">
 
 	<sql id="where">
 		<!-- 통합검색 -->
@@ -12,6 +12,27 @@
 		OR  MEM_LIKE LIKE '%' || #{keyword} || '%'
 		OR  MEM_MILEAGE LIKE '%' || #{keyword} || '%')
 	</sql>
+	<!-- 1 -->
+	<resultMap type="memberMineVO" id="memAttachMap">
+		<id property="memId" column="MEM_ID" />
+		<result property="memPass" column="MEM_PASS" /> 
+		<result property="memName" column="MEM_NAME" />
+		<result property="memBir" column="MEM_BIR" />
+		<result property="memAdd1" column="MEM_ADD1" /> 
+        <result property="memAdd2" column="MEM_ADD2" />
+        <result property="memMail" column="MEM_MAIL" />
+        <result property="memJob" column="MEM_JOB" />
+        <result property="memLike" column="MEM_LIKE" />
+        <result property="memMileage" column="MEM_MILEAGE" />
+        <collection property="attachVOList" resultMap="attachMap"></collection>
+	</resultMap>
+	
+	<!-- N -->
+	<resultMap type="attachVO" id="attachMap">
+		<id property="seq" column="SEQ" />
+		<id property="tid" column="TID" />
+		<result property="attachName" column="ATTACH_NAME" />
+	</resultMap>
 	
 	 
 	 <select id="memberList" parameterType="hashMap" resultType="memberMineVO">
@@ -49,4 +70,12 @@
 		WHERE MEM_ID = #{memId}
 	</select>
 	
+	<!-- 회원 상세보기 -->
+	<select id="detail" parameterType="String" resultMap="memAttachMap">
+		SELECT M.MEM_ID, M.MEM_PASS, M.MEM_NAME, M.MEM_BIR, M.MEM_ADD1, 
+		        M.MEM_ADD2, M.MEM_MAIL, M.MEM_JOB, M.MEM_LIKE, M.MEM_MILEAGE,
+		        A.SEQ, A.TID, A.ATTACH_NAME
+		FROM MEMBER_MINE M LEFT OUTER JOIN ATTACH A ON (M.MEM_ID = A.TID)
+		WHERE MEM_ID = #{memId}
+	</select>
 </mapper>

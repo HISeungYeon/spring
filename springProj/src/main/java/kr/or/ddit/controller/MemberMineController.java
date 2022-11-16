@@ -29,6 +29,7 @@ import kr.or.ddit.service.MemberMineService;
 import kr.or.ddit.service.MemberService;
 import kr.or.ddit.util.ArticlePage;
 import kr.or.ddit.vo.AddressVO;
+import kr.or.ddit.vo.AttachVO;
 import kr.or.ddit.vo.BookVO;
 import kr.or.ddit.vo.CardVO;
 import kr.or.ddit.vo.MemberVO;
@@ -141,6 +142,26 @@ public class MemberMineController {
 //		
 //		return rsltMap;
 //	}
+	
+	//요청 URI : /board/detail?memId=
+	//URL : /board/detail
+	//요청 파라미터 : memId
+	@GetMapping("/board/detail")
+	public String detail(String memId, Model model) {
+		log.info("memId : " + memId);
+		
+		//회원 상세 정보 (1)
+		MemberMineVO memberMineVO = this.memberMineService.detail(memId);
+		
+		List<AttachVO> attachVOList = memberMineVO.getAttachVOList();
+		
+		log.info("memberMineVO : " + memberMineVO.toString());
+		
+		model.addAttribute("memberMineVO", memberMineVO);
+		model.addAttribute("attachVOList", attachVOList);
+		
+		return "board/detail";
+	}
 	
 }
 

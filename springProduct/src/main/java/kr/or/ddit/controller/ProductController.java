@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,6 +46,7 @@ public class ProductController {
 	// URI => http://localhost/create
 	// Request : client가 server에 URI요청
 	// Mapping : create() 메소드 실행
+	
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
 	public ModelAndView create() {
 		/*
@@ -83,7 +85,12 @@ public class ProductController {
 		return mav;
 	}
 	
-	//상품 목록
+	//1) 로그인한 사용자만 접근 가능
+	//@PreAuthorize("isAuthenticated()")
+	//2) 회원권한을 가진 사용자만 접근 가능
+	//@PreAuthorize("hasRole('ROLE_MEMBER')")
+	//3) 회원권한 or 관리자 권한을 가진 사용자만 접근 가능(Any => 또는(or연산))
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
 	@RequestMapping(value="/products", method = RequestMethod.GET)
 	public ModelAndView products(ModelAndView mav) {
 		List<ProductVO> data = this.productService.list();

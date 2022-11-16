@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.dao.MemberMineDao;
+import kr.or.ddit.mapper.MemberMineMapper;
 import kr.or.ddit.service.MemberMineService;
 import kr.or.ddit.util.FileUploadUtil;
 import kr.or.ddit.vo.AttachVO;
@@ -22,24 +23,21 @@ public class MemberMineImpl implements MemberMineService {
 	MemberMineDao memberMineDao;
 	
 	@Autowired
+	MemberMineMapper memMapper;
+	
+	@Autowired
 	FileUploadUtil fileUploadUtil;
-
-	//ATTACH 테이블에 다중 INSERT
-	@Override
-	public int insertAttach(List<AttachVO> attachVOList) {
-		return this.memberMineDao.insertAttach(attachVOList);
-	}
 
 	@Override
 	public List<MemberMineVO> memberList(Map<String, String> map) {
-		return this.memberMineDao.memberList(map);
+		return this.memMapper.memberList(map);
 	}
 	
 	// 멤버 추가
 	@Override
 	public int memberInsert(MemberMineVO memberMineVO) {
 		
-		int result = this.memberMineDao.memberInsert(memberMineVO);
+		int result = this.memMapper.memberInsert(memberMineVO);
 		
 		if(result > 0) {
 			fileUploadUtil.fileUploadAction(memberMineVO.getMemImage(), 
@@ -51,12 +49,18 @@ public class MemberMineImpl implements MemberMineService {
 	
 	@Override
 	public int getTotal(Map<String, String> map) {
-		return this.memberMineDao.getTotal(map);
+		return this.memMapper.getTotal(map);
 	}
 	
 //	아이디 검사
 	@Override
 	public int idCheck(String memId) {
-		return this.memberMineDao.idCheck(memId);
+		return this.memMapper.idCheck(memId);
+	}
+	
+	//상세 보기
+	@Override
+	public MemberMineVO detail(String memId){
+		return this.memMapper.detail(memId);
 	}
 }

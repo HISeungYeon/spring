@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+<beans:beans xmlns="http://www.springframework.org/schema/mvc" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:beans="http://www.springframework.org/schema/beans" 
+xmlns:context="http://www.springframework.org/schema/context" 
+xmlns:security="http://www.springframework.org/schema/security" 
+xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context.xsd 
+http://www.springframework.org/schema/security 
+http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
 <!-- servlet-context.xml : 스프링 웹(view) 설정 파일  -->
 
@@ -26,6 +32,7 @@
 	
 	<!-- rk.or.ddit 파일들 스캔해서 @(어노테이션)찾기! -->
 	<context:component-scan base-package="kr.or.ddit" />
+	<context:component-scan base-package="kr.or.ddit.security" />
 	
 	<!-- 첨부 파일을 처리하는 빈 설정 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
@@ -35,5 +42,17 @@
 	<beans:bean id="uploadPath" class="java.lang.String">
 		<beans:constructor-arg value="C:\\upload"></beans:constructor-arg>
 	</beans:bean>
+	
+	<!-- 스프링 시큐리티 애너테이션 활성화
+		1. pre-post-annotations >> **@PreAuthorize**, @PostAuthorize 활성화
+		@PreAuthoriz : 특정 메소드를 실행하기 전에 role(권한)을 체킹
+		@PostAuthorize : 특정 메소드를 실행한 후에 role(권한)을 체킹 
+		
+		2. secured-annotations >> @secured를 활성화
+		Secured : 스프링 시큐리티 모듈을 지원하기 위한 어노테이션
+	 -->
+	<security:global-method-security pre-post-annotations="enabled" 
+		secured-annotations="enabled" />
+		
 	
 </beans:beans>

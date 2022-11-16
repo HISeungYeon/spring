@@ -15,5 +15,7 @@
  		<typeAlias type="kr.or.ddit.vo.ProductVO" alias="productVO" />
  		<typeAlias type="kr.or.ddit.vo.CartVO" alias="cartVO" />
  		<typeAlias type="kr.or.ddit.vo.CartDetVO" alias="cartDetVO" />
+ 		<typeAlias type="kr.or.ddit.vo.MemberVO" alias="memberVO" />
+ 		<typeAlias type="kr.or.ddit.vo.MemberAuthVO" alias="memberAuthVO" />
  	</typeAliases>
  </configuration>

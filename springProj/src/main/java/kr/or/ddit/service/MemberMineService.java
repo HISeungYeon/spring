@@ -11,9 +11,6 @@ import kr.or.ddit.vo.MemberMineVO;
 public interface MemberMineService {
 	//메소드 시그니처 
 
-	//ATTACH 테이블에 다중 INSERT
-	public int insertAttach(List<AttachVO> attachVOList);
-	
 	//멤버 목록보기
 	public List<MemberMineVO> memberList(Map<String, String> map);
 
@@ -23,6 +20,9 @@ public interface MemberMineService {
 	public int getTotal(Map<String, String> map);
 
 	public int idCheck(String memId);
+
+	//상세보기
+	public MemberMineVO detail(String memId);
 	
 	
 	

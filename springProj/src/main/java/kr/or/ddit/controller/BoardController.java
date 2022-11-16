@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.or.ddit.vo.BookVO;
 import lombok.extern.slf4j.Slf4j;
 
+
 //프링아 이거 자바빈 객체로 관리해조
 @RequestMapping("/board") //클래스레벨
 @Slf4j
